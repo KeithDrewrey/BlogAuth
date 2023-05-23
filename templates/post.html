@@ -1,0 +1,81 @@
+{% include "header.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('{{post.img_url}}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>{{post.title}}</h1>
+            <h2 class="subheading">{{post.subtitle}}</h2>
+            <span class="meta">Posted by
+              <a href="#">{{post.author}}</a>
+              on {{post.date}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            {{ post.body|safe }}
+          <hr>
+
+            <div class="clearfix">
+            <a class="btn btn-primary float-right" href="{{url_for('edit_post', post_id=post.id)}}">Edit Post</a>
+            <br/>
+              <br/>
+
+            </div>
+
+
+
+<!--           Comments Area -->
+          <div class="col-lg-8 col-md-10 mx-auto comment">
+              <ul class="commentList">
+                <li>
+                    <div>
+                      {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+                    </div>
+
+                  <li>
+                        <div>
+                          <span class="date sub-text">comment author name</span>
+                        </div>
+                </li>
+              </ul>
+            </div>
+
+
+          </div>
+
+        <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        {% for comment in all_comments %}
+        <div class="post-preview">
+            <h3>{{comment.text}}</h3>
+            <h6> {{comment.commenter.name}}</h6>
+        </div>
+        </div>
+      </div>
+    </div>
+
+        <hr>
+        {% endfor %}
+
+
+
+      </div>
+    </div>
+  </article>
+
+  <hr>
+{% include "footer.html" %}
